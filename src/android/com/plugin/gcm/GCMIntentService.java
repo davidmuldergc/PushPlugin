@@ -132,7 +132,10 @@ public class GCMIntentService extends GCMBaseIntentService {
 			Log.e(TAG, "Number format exception - Error parsing Notification ID" + e.getMessage());
 		}
 		
-		mNotificationManager.notify((String) appName, notId, mBuilder.build());
+		Notification notification = mBuilder.build();
+    notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "/beep.mp3");
+    notification.defaults |= Notification.DEFAULT_VIBRATE;
+    mNotificationManager.notify((String) appName, NOTIFICATION_ID, notification);
 	}
 	
 	private static String getAppName(Context context)
